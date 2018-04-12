@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Email Validation</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/styles.css')}}">
+    <!-- <link rel="stylesheet" type="text/css" href="../static/css/styles.css"> -->
+</head>
+<body>
+    <div class="wrapper">
+        <div class="errorflash">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <p style="color: red">{{message}}</p>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+        <h3>Email Addresses Entered:</h3>
+        <table>
+            {% for row in all_emails %}
+            <tr>    
+                <td><p>{{row.email}}</p></td>
+                <td>{{row['created_at'].strftime('%Y/%m/%d %I:%M %p')}}</td>
+                <td>
+                    <form action='/delete' method='post'>
+                        <input type='hidden' name='deleteId' value={{row['id']}} />
+                        <input type='submit' value='Delete'>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
